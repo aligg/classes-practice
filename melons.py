@@ -1,3 +1,6 @@
+from random import randint
+
+
 """Classes for melon orders."""
 
 class AbstractMelonOrder(object):
@@ -11,16 +14,25 @@ class AbstractMelonOrder(object):
         self.tax = tax
         self.order_type = order_type
 
+
+    def get_base_price(self):
+        """calculates SPLURGE pricing"""
+
+        base_price = randint(5,9)
+
+        return base_price
+
+
+
     def get_total(self):
 
-        base_price = 5
+        base_price = self.get_base_price()
 
-        if self.species.lower() == "christmas melons":
-            base_price = base_price * 1.5
+        if "christmas melon" in self.species.lower():
+            base_price *= 1.5
 
-        total = (1 + self.tax) * self.qty * base_price
+        return (1 + self.tax) * self.qty * base_price #total!
 
-        return total
 
 
 class DomesticMelonOrder(AbstractMelonOrder):
@@ -76,7 +88,7 @@ class InternationalMelonOrder(AbstractMelonOrder):
 class GovermentOrder(AbstractMelonOrder):
     """ government order for melons """
 
-    def __init__(self, species, qty, passed_inspection):
+    def __init__(self, species, qty):
         """ Initialize melon order attributes for govts"""
         super(GovermentOrder, self).__init__(species, qty, order_type='goverment order', tax=0)
 
@@ -84,73 +96,12 @@ class GovermentOrder(AbstractMelonOrder):
 
     def inspection_passed(self):
         """ Inspection status """
+
         self.passed_inspection = True
+        #return self.passed_inspection
 
 
-order0 = GovermentOrder('watermelon', 6, True)
-if order0.inspection_passed() is True:
-    print "yippeeeeeeeeee"
-
-
-# class InternationalMelonOrder(object):
-#     """An international (non-US) melon order."""
-
-#     def __init__(self, species, qty, country_code):
-#         """Initialize melon order attributes."""
-
-#         self.species = species
-#         self.qty = qty
-#         self.country_code = country_code
-#         self.shipped = False
-#         self.order_type = "international"
-#         self.tax = 0.17
-
-#     def get_total(self):
-#         """Calculate price, including tax."""
-
-#         base_price = 5
-#         total = (1 + self.tax) * self.qty * base_price
-
-#         return total
-
-#     def mark_shipped(self):
-#         """Record the fact than an order has been shipped."""
-
-#         self.shipped = True
-
-#     def get_country_code(self):
-#         """Return the country code."""
-
-#         return self.country_code
-
-
-
-
-
-
-
-
-# class DomesticMelonOrder(object):
-#     """A melon order within the USA."""
-
-#     def __init__(self, species, qty):
-#         """Initialize melon order attributes."""
-
-#         self.species = species
-#         self.qty = qty
-#         self.shipped = False
-#         self.order_type = "domestic"
-#         self.tax = 0.08
-
-#     def get_total(self):
-#         """Calculate price, including tax."""
-
-#         base_price = 5
-#         total = (1 + self.tax) * self.qty * base_price
-
-#         return total
-
-#     def mark_shipped(self):
-#         """Record the fact than an order has been shipped."""
-
-#         self.shipped = True
+order0 = InternationalMelonOrder('christmas MELONSSSSSSSSSSS', 6, 'KAZAKHSTANDYYYY')
+# if order0.inspection_passed() is False:
+#     print "yippeeeeeeeeee"
+print order0.get_total()
