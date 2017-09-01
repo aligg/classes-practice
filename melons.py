@@ -1,4 +1,5 @@
 from random import randint
+import time
 
 
 """Classes for melon orders."""
@@ -18,10 +19,17 @@ class AbstractMelonOrder(object):
     def get_base_price(self):
         """calculates SPLURGE pricing"""
 
-        base_price = randint(5,9)
+        week_day = time.strftime("%a", time.localtime())
+        current_time = time.strftime("%H", time.localtime())
+
+        if week_day not in ['Sat', 'Sun'] and current_time in range(8, 11):
+
+            base_price = randint(5, 9) + 4
+        else:
+
+            base_price = randint(5, 9)
 
         return base_price
-
 
 
     def get_total(self):
