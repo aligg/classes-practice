@@ -72,10 +72,24 @@ class InternationalMelonOrder(AbstractMelonOrder):
 
         return self.country_code
 
-order0 = InternationalMelonOrder('watermelon', 6, 'AUS')
-print order0.get_total()
+
+class GovermentOrder(AbstractMelonOrder):
+    """ government order for melons """
+
+    def __init__(self, species, qty, passed_inspection):
+        """ Initialize melon order attributes for govts"""
+        super(GovermentOrder, self).__init__(species, qty, order_type='goverment order', tax=0)
+
+        self.passed_inspection = False
+
+    def inspection_passed(self):
+        """ Inspection status """
+        self.passed_inspection = True
 
 
+order0 = GovermentOrder('watermelon', 6, True)
+if order0.inspection_passed() is True:
+    print "yippeeeeeeeeee"
 
 
 # class InternationalMelonOrder(object):
